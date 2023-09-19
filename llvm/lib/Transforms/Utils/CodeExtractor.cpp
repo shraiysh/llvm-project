@@ -1182,6 +1182,13 @@ CallInst *CodeExtractor::emitCallAndSwitchStatement(Function *newFunction,
 
     // Allocate a struct at the beginning of this function
     StructArgTy = StructType::get(newFunction->getContext(), ArgTypes);
+    dbgs() << "Args: ";
+    dbgs() << AllocationBlock->getName() << "\n";
+    AllocationBlock->print(dbgs());
+    // dbgs() << StructArgTy << "\n" << DL.getAllocaAddrSpace() << "\nNULLPTR\n"
+    // <<  "structArg\n" << (AllocationBlock ?
+    // &*AllocationBlock->getFirstInsertionPt()
+    //                     : &codeReplacer->getParent()->front().front());
     Struct = new AllocaInst(
         StructArgTy, DL.getAllocaAddrSpace(), nullptr, "structArg",
         AllocationBlock ? &*AllocationBlock->getFirstInsertionPt()
